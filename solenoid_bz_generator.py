@@ -3,6 +3,7 @@
 
 """
 from __future__ import division
+import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -57,23 +58,129 @@ def plot_bz(z, bz):
     plt.show()
 
 
-def main():
+def main(scenario=1):
     mice_coils = solenoid_coils()
-    mice_coils.add_coil(z=16.96-3.2, l=0.1106, r1=0.258, r2=0.3258, j=134e6)
-    mice_coils.add_coil(z=16.96-2.45, l=1.3143, r1=0.258, r2=0.2801, j=147e6)
-    mice_coils.add_coil(z=16.96-1.7, l=0.1106, r1=0.258, r2=0.3189, j=131e6)
-    mice_coils.add_coil(z=16.96-1.3, l=0.1995, r1=0.258, r2=0.2889, j=135e6)
-    mice_coils.add_coil(z=16.96-0.861, l=0.2013, r1=0.258, r2=0.3042, j=113e6)
-    mice_coils.add_coil(z=16.96-0.203, l=0.2133, r1=0.267, r2=0.3618, j=104e6)
-    mice_coils.add_coil(z=16.96+0.203, l=0.2133, r1=0.267, r2=0.3618, j=-104e6)
-    mice_coils.add_coil(z=16.96+0.861, l=0.2013, r1=0.258, r2=0.3042, j=-113e6)
-    mice_coils.add_coil(z=16.96+1.3, l=0.1995, r1=0.258, r2=0.2889, j=-135e6)
-    mice_coils.add_coil(z=16.96+1.7, l=0.1106, r1=0.258, r2=0.3189, j=-131e6)
-    mice_coils.add_coil(z=16.96+2.45, l=1.3143, r1=0.258, r2=0.2801, j=-147e6)
-    mice_coils.add_coil(z=16.96+3.2, l=0.1106, r1=0.258, r2=0.3258, j=-134e6)
+    # Two scenarios:
+    if scenario == 1:
+        # Scenario one:
+        # MICE Step IV expected current densities for 140 MeV/c
+        mice_coils.add_coil(z=16.96-3.2, l=0.1106, r1=0.258, 
+                            r2=0.3258, j=134e6)
+        mice_coils.add_coil(z=16.96-2.45, l=1.3143, r1=0.258, 
+                            r2=0.2801, j=147e6)
+        mice_coils.add_coil(z=16.96-1.7, l=0.1106, r1=0.258, 
+                            r2=0.3189, j=131e6)
+        mice_coils.add_coil(z=16.96-1.3, l=0.1995, r1=0.258, 
+                            r2=0.2889, j=135e6)
+        mice_coils.add_coil(z=16.96-0.861, l=0.2013, r1=0.258, 
+                            r2=0.3042, j=113e6)
+        mice_coils.add_coil(z=16.96-0.203, l=0.2133, r1=0.267, 
+                            r2=0.3618, j=104e6)
+        mice_coils.add_coil(z=16.96+0.203, l=0.2133, r1=0.267, 
+                            r2=0.3618, j=-104e6)
+        mice_coils.add_coil(z=16.96+0.861, l=0.2013, r1=0.258, 
+                            r2=0.3042, j=-113e6)
+        mice_coils.add_coil(z=16.96+1.3, l=0.1995, r1=0.258, 
+                            r2=0.2889, j=-135e6)
+        mice_coils.add_coil(z=16.96+1.7, l=0.1106, r1=0.258, 
+                            r2=0.3189, j=-131e6)
+        mice_coils.add_coil(z=16.96+2.45, l=1.3143, r1=0.258,
+                            r2=0.2801, j=-147e6)
+        mice_coils.add_coil(z=16.96+3.2, l=0.1106, r1=0.258, 
+                            r2=0.3258, j=-134e6)
+    elif scenario == 2:
+        # Scenario 2:
+        # Coils as built; Solenoid mode currents:
+        # SS coils physical information was obtained from:
+        #  http://accelconf.web.cern.ch/accelconf/pac2013/papers/thpho15.pdf
+        # Focus coil physical information was from:
+        #  http://mice.iit.edu/micenotes/public/pdf/MICE0463/MICE0463.pdf
+        mice_coils.add_coil(z=16.96-3.2, l=0.1106, r1=0.258,
+                            r2=0.3258, j=234/(0.3258-0.258)/0.1106*3584)
+        mice_coils.add_coil(z=16.96-2.45, l=1.3143, r1=0.258,
+                            r2=0.2801, j=278/(0.2801-0.258)/1.3143*15360)
+        mice_coils.add_coil(z=16.96-1.7, l=0.1106, r1=0.258,
+                            r2=0.3189, j=249/(0.3189-0.258)/0.1106*3968)
+        mice_coils.add_coil(z=16.96-1.3, l=0.1995, r1=0.258,
+                            r2=0.2889, j=280/(0.2889-0.258)/0.1995*3192)
+        mice_coils.add_coil(z=16.96-0.861, l=0.2013, r1=0.258,
+                            r2=0.3042, j=265/(0.3042-0.258)/0.2013*4830)
+        mice_coils.add_coil(z=16.96-0.203, l=0.2133, r1=0.267,
+                            r2=0.3618, j=114/(0.3618-0.267)/0.2133*11263)
+        mice_coils.add_coil(z=16.96+0.203, l=0.2133, r1=0.267,
+                            r2=0.3618, j=-114/(0.3618-0.267)/0.2133*11266)
+        mice_coils.add_coil(z=16.96+0.861, l=0.2013, r1=0.258, 
+                            r2=0.3042, j=-265/(0.3042-0.258)/0.2013*4830)
+        mice_coils.add_coil(z=16.96+1.3, l=0.1995, r1=0.258, 
+                            r2=0.2889, j=-280/(0.2889-0.258)/0.1995*3192)
+        mice_coils.add_coil(z=16.96+1.7, l=0.1106, r1=0.258, 
+                            r2=0.3189, j=-249/(0.3189-0.258)/0.1106*3968)
+        mice_coils.add_coil(z=16.96+2.45, l=1.3143, r1=0.258,
+                            r2=0.2801, j=-278/(0.2801-0.258)/1.3143*15360)
+        mice_coils.add_coil(z=16.96+3.2, l=0.1106, r1=0.258, 
+                            r2=0.3258, j=-234/(0.3258-0.258)/0.1106*3584)
+    elif scenario == 3:
+        # Scenario 3:
+        # Coils as built; Flip mode currents:
+        mice_coils.add_coil(z=16.96-3.2, l=0.1106, r1=0.258,
+                            r2=0.3258, j=234/(0.3258-0.258)/0.1106*3584)
+        mice_coils.add_coil(z=16.96-2.45, l=1.3143, r1=0.258,
+                            r2=0.2801, j=274/(0.2801-0.258)/1.3143*15360)
+        mice_coils.add_coil(z=16.96-1.7, l=0.1106, r1=0.258,
+                            r2=0.3189, j=253/(0.3189-0.258)/0.1106*3968)
+        mice_coils.add_coil(z=16.96-1.3, l=0.1995, r1=0.258,
+                            r2=0.2889, j=256/(0.2889-0.258)/0.1995*3192)
+        mice_coils.add_coil(z=16.96-0.861, l=0.2013, r1=0.258,
+                            r2=0.3042, j=281/(0.3042-0.258)/0.2013*4830)
+        mice_coils.add_coil(z=16.96-0.203, l=0.2133, r1=0.267,
+                            r2=0.3618, j=225/(0.3618-0.267)/0.2133*11263)
+        mice_coils.add_coil(z=16.96+0.203, l=0.2133, r1=0.267,
+                            r2=0.3618, j=-225/(0.3618-0.267)/0.2133*11266)
+        mice_coils.add_coil(z=16.96+0.861, l=0.2013, r1=0.258,
+                            r2=0.3042, j=-281/(0.3042-0.258)/0.2013*4830)
+        mice_coils.add_coil(z=16.96+1.3, l=0.1995, r1=0.258,
+                            r2=0.2889, j=-256/(0.2889-0.258)/0.1995*3192)
+        mice_coils.add_coil(z=16.96+1.7, l=0.1106, r1=0.258,
+                            r2=0.3189, j=-253/(0.3189-0.258)/0.1106*3968)
+        mice_coils.add_coil(z=16.96+2.45, l=1.3143, r1=0.258,
+                            r2=0.2801, j=-274/(0.2801-0.258)/1.3143*15360)
+        mice_coils.add_coil(z=16.96+3.2, l=0.1106, r1=0.258,
+                            r2=0.3258, j=-234/(0.3258-0.258)/0.1106*3584)
+    elif scenario == 4:
+        # Scenario 4:
+        # Coils as built; 09/24/15 Chris Rogers' solenoid mode
+        mice_coils.add_coil(z=16.96-3.2, l=0.1106, r1=0.258,
+                            r2=0.3258, j=70.2/(0.3258-0.258)/0.1106*3584)
+        mice_coils.add_coil(z=16.96-2.45, l=1.3143, r1=0.258,
+                            r2=0.2801, j=82.2/(0.2801-0.258)/1.3143*15360)
+        mice_coils.add_coil(z=16.96-1.7, l=0.1106, r1=0.258,
+                            r2=0.3189, j=75.9/(0.3189-0.258)/0.1106*3968)
+        mice_coils.add_coil(z=16.96-1.3, l=0.1995, r1=0.258,
+                            r2=0.2889, j=208.4/(0.2889-0.258)/0.1995*3192)
+        mice_coils.add_coil(z=16.96-0.861, l=0.2013, r1=0.258,
+                            r2=0.3042, j=257.2/(0.3042-0.258)/0.2013*4830)
+        mice_coils.add_coil(z=16.96-0.203, l=0.2133, r1=0.267,
+                            r2=0.3618, j=96/(0.3618-0.267)/0.2133*11263)
+        mice_coils.add_coil(z=16.96+0.203, l=0.2133, r1=0.267,
+                            r2=0.3618, j=96/(0.3618-0.267)/0.2133*11266)
+        mice_coils.add_coil(z=16.96+0.861, l=0.2013, r1=0.258,
+                            r2=0.3042, j=0/(0.3042-0.258)/0.2013*4830)
+        mice_coils.add_coil(z=16.96+1.3, l=0.1995, r1=0.258,
+                            r2=0.2889, j=245/(0.2889-0.258)/0.1995*3192)
+        mice_coils.add_coil(z=16.96+1.7, l=0.1106, r1=0.258,
+                            r2=0.3189, j=75.9/(0.3189-0.258)/0.1106*3968)
+        mice_coils.add_coil(z=16.96+2.45, l=1.3143, r1=0.258,
+                            r2=0.2801, j=82.2/(0.2801-0.258)/1.3143*15360)
+        mice_coils.add_coil(z=16.96+3.2, l=0.1106, r1=0.258,
+                            r2=0.3258, j=88.97/(0.3258-0.258)/0.1106*3584)
+
     bz = mice_coils.calc_bz(np.arange(12, 22, 0.05))
     plot_bz(np.arange(12, 22, 0.05), bz)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main(int(sys.argv[1]))
+    except ValueError as e_convert:
+        print e_convert
+        print "---Error: Can not convert %s to an int.---"%sys.argv[1]
