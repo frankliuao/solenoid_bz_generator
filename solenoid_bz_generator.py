@@ -63,31 +63,43 @@ def main(scenario=1):
     # Two scenarios:
     if scenario == 1:
         # Scenario one:
-        # MICE Step IV expected current densities for 140 MeV/c
+        # MICE Step IV expected current densities for 200 MeV/c
         mice_coils.add_coil(z=16.96-3.2, l=0.1106, r1=0.258, 
                             r2=0.3258, j=134e6)
+        # 280.36 A
         mice_coils.add_coil(z=16.96-2.45, l=1.3143, r1=0.258, 
                             r2=0.2801, j=147e6)
+        # 277.98 A
         mice_coils.add_coil(z=16.96-1.7, l=0.1106, r1=0.258, 
                             r2=0.3189, j=131e6)
+        # 222.37 A
         mice_coils.add_coil(z=16.96-1.3, l=0.1995, r1=0.258, 
                             r2=0.2889, j=135e6)
+        # 260.72 A
         mice_coils.add_coil(z=16.96-0.861, l=0.2013, r1=0.258, 
                             r2=0.3042, j=113e6)
+        # 217.58 A
         mice_coils.add_coil(z=16.96-0.203, l=0.2133, r1=0.267, 
                             r2=0.3618, j=104e6)
+        # 186.71 A
         mice_coils.add_coil(z=16.96+0.203, l=0.2133, r1=0.267, 
                             r2=0.3618, j=-104e6)
+        # -186.71 A
         mice_coils.add_coil(z=16.96+0.861, l=0.2013, r1=0.258, 
                             r2=0.3042, j=-113e6)
+        # -217.58 A
         mice_coils.add_coil(z=16.96+1.3, l=0.1995, r1=0.258, 
                             r2=0.2889, j=-135e6)
+        # -260.72 A
         mice_coils.add_coil(z=16.96+1.7, l=0.1106, r1=0.258, 
                             r2=0.3189, j=-131e6)
+        # -222.37 A
         mice_coils.add_coil(z=16.96+2.45, l=1.3143, r1=0.258,
                             r2=0.2801, j=-147e6)
+        # -277.98 A
         mice_coils.add_coil(z=16.96+3.2, l=0.1106, r1=0.258, 
                             r2=0.3258, j=-134e6)
+        # -280.36 A
     elif scenario == 2:
         # Scenario 2:
         # Coils as built; Solenoid mode currents:
